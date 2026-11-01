@@ -41,30 +41,10 @@ for(const dx of [-size*.39,size*.39])for(const dy of [-h+6,size*.44])rect(x+dx-2
 const cratePositions=[[-.35,-.25],[.34,-.27],[-.4,.28],[.39,.31],[.02,-.39]];
 for(const [nx,ny] of cratePositions)crate(nx*Math.min(W,900),ny*Math.min(H,650),42);
 for(const b of bullets){circle(b.x,b.y,6,'#ffaf50');circle(b.x,b.y,3,'#fff4ae')}for(const q of particles)circle(q.x,q.y,3*(1-q.t/.2),'#ffc76d');let bounce=m>.01?Math.abs(Math.sin(p.bob))*7:0;circle(p.x,p.y+21,20,'#090c17aa');ctx.save();ctx.translate(p.x,p.y-bounce);let turnScale=p.flipT<1?(p.flipT<.5?p.flipFrom*Math.cos(Math.PI*p.flipT):p.flipTo*Math.cos(Math.PI*(1-p.flipT))):p.flipTo;ctx.scale(turnScale,1);
-// Compact pixel-art heroine: pink twin-tail hair, bow, dark dress, tiny boots.
-// Render at a fixed integer scale for crisp retro pixels, without walk frames.
-const heroine=[
-"................",
-"...RR......RR...",
-"..RPPPRRRRPPPR..",
-".RPPPPPPPPPPPPR.",
-".PPPPPPPPPPPPPP.",
-"PPPHHHPPPPHHHPPP",
-"PPHSSSHHHSSSHPPP",
-"PPHSSSHHHSSSHPPP",
-"PPHSKSHHHKSSHPPP",
-".PHSSSHHHSSSHP..",
-".PPSSSSSSSSSPP..",
-"..PPSSSSSSSPP...",
-"...DDDDDDDD.....",
-"...DWWDDWWD.....",
-"....DDDDDD......",
-"....BB..BB......",
-"....BB..BB......"
-];
-const palette={R:'#b94a78',P:'#f18db7',H:'#ffd1dc',S:'#ffe2d5',K:'#29304c',D:'#34304b',W:'#f9b4cb',B:'#75506a'};
-const px=3, sw=16*px, sh=heroine.length*px;
-for(let sy=0;sy<heroine.length;sy++)for(let sx=0;sx<heroine[sy].length;sx++){let color=palette[heroine[sy][sx]];if(color)rect(sx*px-sw/2,sy*px-sh/2,px,px,color)}
+// Sprite sampled from the approved concept image, not hand-drawn placeholder geometry.
+const spriteRows=["aaabbacbbaababbaaabaababbbabbbabbbb","bababbaacbbaaaabbbabbaaaaabaaabbbbb","aaaaaaaabaaaaaaababbbaaaaaabaabbbbb","aabbaabbbac9988cbbbabdddddaabababab","bacbaccaaac55547dccbb95559abbaabbba","baacbcaaac75555559dd5555558cbbbbbaa","caacaaaaba75557775ad5775558cbbbaaba","aaccaaacaa557722225211277758bbabaaa","acddddaca8533333433222232179dbbbaba","bdddddbd655322332222222222775bababa","d5555559533333422222221322257caaaba","d555555577433222222222114432259baaa","d55555555863322222222222442225dcaaa","d755555558632120212222221431239cabc","d775577778401010103102110400239abaa","c8855577743222211243211125011134daa","c8855555742122222242111115111135dba","cdd75575511122422153111125111135dba","bcdd9996521222423403111241412134dba","acd98886522121313503222140512234daa","cc978896522121328dd4432499885235dba","c9577797621115533d931111dd445148daa","955555974121159809800000dd017459aaa","d99557931122254008800000d9007449aba","dd9558410332251007500000770073399ba","cd7998450111177308600000550083334dc","dd5113466111278999000000000083324da","33222435654227799890779d0ddd8ddddbb","8911433667442767d88898d999d99888886","d912433667541766dd7b99d633666000000","c7244446666614486795499d66666644663","cd35643666661446768679dd98886666687","cc9997345866668866664001d69d38877dd","bacdd7445866695886665006c9871353dac","aaabbd444c66d7776986774dd9899399cab","abbbbbdddbc9407554445888ddddbddccbb","bbababcddba913755130000689ddbccccbc","abaaabbaaabcdcd740000004ddaabccccab","bbaaaaabcbbcbbd1009a9733dccacbcbcac","babaababaabcba7446bbc8648dcaaabcaca","bbabcababaacac775daab9877dabcbbcbcb","baabbaaaaababcddcdaabddddcbbbabaaca","aaaaaabbabbcabbbbbaccbcbaaabaaaabaa"];
+const spritePalette=["#f9dfcc","#f59fac","#f591ab","#e08299","#d76484","#d0415f","#874a63","#822d4a","#47172c","#0f0d14","#070d16","#060e16","#060c15","#04090f"];
+for(let sy=0;sy<spriteRows.length;sy++)for(let sx=0;sx<35;sx++){let col=spritePalette[parseInt(spriteRows[sy][sx],16)];if(col && !(parseInt(spriteRows[sy][sx],16)>=9 && (sx<4||sx>31||sy<4||sy>40)))rect((sx-17.5)*1.65,(sy-21.5)*1.65,1.75,1.75,col)}
 // Keep gun upright on the left: aim rotates in world space, but mirror its local vertical axis so the grip never flips above the barrel.
 ctx.restore();ctx.save();ctx.translate(p.x,p.y-bounce+5);ctx.rotate(p.angle);if(Math.cos(p.angle)<0)ctx.scale(1,-1);ctx.fillStyle='#111526';ctx.fillRect(5,-7,34,15);rect(9,-5,24,10,'#a8b3d4');rect(18,-8,12,5,'#ec8dba');rect(32,-4,18,8,'#5c6c92');rect(46,-6,7,12,'#e7a0c7');rect(11,6,7,14,'#6d5779');ctx.restore();ctx.restore();ctx.strokeStyle='#ffadd6';ctx.lineWidth=1;let rx=p.x+Math.cos(p.angle)*115,ry=p.y+Math.sin(p.angle)*115;ctx.beginPath();ctx.arc(rx,ry,9,0,Math.PI*2);ctx.moveTo(rx-16,ry);ctx.lineTo(rx-5,ry);ctx.moveTo(rx+5,ry);ctx.lineTo(rx+16,ry);ctx.moveTo(rx,ry-16);ctx.lineTo(rx,ry-5);ctx.moveTo(rx,ry+5);ctx.lineTo(rx,ry+16);ctx.stroke();ctx.restore();requestAnimationFrame(frame)}requestAnimationFrame(frame);
 </script></body></html>
