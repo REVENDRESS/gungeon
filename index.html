@@ -10,11 +10,15 @@ function polygon(points,color){ctx.fillStyle=color;ctx.beginPath();ctx.moveTo(..
 function drawProp(o){const x=o.x,y=o.y;ctx.save();ctx.translate(x,y);
 ctx.fillStyle='#090b17aa';ctx.beginPath();ctx.ellipse(3,12,31,13,0,0,Math.PI*2);ctx.fill();
 if(o.type==='pot'){circle(0,-10,20,'#a58e88');circle(0,-19,14,'#e2c4a4');circle(0,-20,9,'#242638');rect(-15,-12,30,8,'#99827e')}else if(o.type==='crate'){
-polygon([[-23,-30],[2,-44],[29,-30],[3,-15]],'#a98a69');
-polygon([[-23,-30],[3,-15],[3,12],[-23,-2]],'#66503f');
-polygon([[3,-15],[29,-30],[29,-2],[3,12]],'#80644c');
-ctx.strokeStyle='#d6b28a';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-16,-27);ctx.lineTo(3,-18);ctx.lineTo(21,-29);ctx.moveTo(-17,-21);ctx.lineTo(-17,-3);ctx.moveTo(23,-24);ctx.lineTo(23,-5);ctx.stroke();
-ctx.strokeStyle='#43352d';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-19,-26);ctx.lineTo(-1,-17);ctx.moveTo(-19,-5);ctx.lineTo(0,6);ctx.stroke();
+// Pixel-style isometric wooden crate: visible lid, front and right side.
+polygon([[-25,-24],[7,-42],[32,-27],[0,-8]],'#c48a51'); // top
+polygon([[-25,-24],[0,-8],[0,22],[-25,7]],'#986139'); // front
+polygon([[0,-8],[32,-27],[32,4],[0,22]],'#67412f'); // right
+ctx.strokeStyle='#322333';ctx.lineWidth=3;ctx.lineJoin='miter';
+for(const face of [[[-25,-24],[7,-42],[32,-27],[0,-8]],[[-25,-24],[0,-8],[0,22],[-25,7]],[[0,-8],[32,-27],[32,4],[0,22]]]){ctx.beginPath();ctx.moveTo(...face[0]);for(let i=1;i<face.length;i++)ctx.lineTo(...face[i]);ctx.closePath();ctx.stroke()}
+ctx.strokeStyle='#e8b16e';ctx.lineWidth=3;ctx.beginPath();ctx.moveTo(-18,-25);ctx.lineTo(7,-37);ctx.lineTo(25,-27);ctx.moveTo(-12,-17);ctx.lineTo(12,-31);ctx.stroke();
+ctx.strokeStyle='#4c302b';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(-21,-17);ctx.lineTo(-4,12);ctx.moveTo(-20,5);ctx.lineTo(-4,-6);ctx.moveTo(6,-6);ctx.lineTo(27,-20);ctx.moveTo(6,16);ctx.lineTo(27,-3);ctx.stroke();
+rect(-22,-20,5,5,'#e9c18c');rect(22,-24,5,5,'#c58a58');rect(-20,1,5,5,'#5b382c');
 }else{
 ctx.fillStyle='#6a4338';ctx.beginPath();ctx.ellipse(0,-9,22,25,0,0,Math.PI*2);ctx.fill();
 rect(-21,-22,42,26,'#865747');rect(-21,-15,42,5,'#c29b69');rect(-21,-1,42,5,'#c29b69');
